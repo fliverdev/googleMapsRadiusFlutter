@@ -96,22 +96,4 @@ class MapsBloc extends Bloc<MapsEvent, MapsState> {
       yield Failure();
     }
   }
-
-  Stream<MapsState> _mapFetchPlaceFromAdrressToMap(String _place) async* {
-    try {
-      yield Loading();
-      var addresses = await Geocoder.local.findAddressesFromQuery(_place);
-      if (addresses != null && addresses.first != null) {
-        var first = addresses.first;
-        yield LocationFromPlaceFound(
-            locationModel: LocationModel(
-                nombre: first.featureName,
-                direccion: first.addressLine,
-                lat: first.coordinates.latitude,
-                long: first.coordinates.longitude));
-      }
-    } catch (_) {
-      yield Failure();
-    }
-  }
 }

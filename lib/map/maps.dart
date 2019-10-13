@@ -69,12 +69,6 @@ class _MapState extends State<Maps> {
       body: BlocListener(
         bloc: _mapsBloc,
         listener: (BuildContext context, MapsState state) {
-          if (state is LocationUserfound) {
-            Scaffold.of(context)..hideCurrentSnackBar();
-            _lastMapPosition =
-                LatLng(state.locationModel.lat, state.locationModel.long);
-            _animateCamera();
-          }
           if (state is MarkerWithRadius) {
             Scaffold.of(context)..hideCurrentSnackBar();
 
@@ -93,10 +87,6 @@ class _MapState extends State<Maps> {
             _isRadiusFixed = state.radiusFixed;
           }
 
-          if (state is MapTypeChanged) {
-            Scaffold.of(context)..hideCurrentSnackBar();
-            _currentMapType = state.mapType;
-          }
           if (state is RadiusUpdate) {
             Scaffold.of(context)..hideCurrentSnackBar();
             _radius = state.radius;
@@ -108,11 +98,6 @@ class _MapState extends State<Maps> {
             Scaffold.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(state.snackBar);
-          }
-          if (state is LocationFromPlaceFound) {
-            Scaffold.of(context)..hideCurrentSnackBar();
-            _lastMapPosition =
-                LatLng(state.locationModel.lat, state.locationModel.long);
           }
           if (state is Failure) {
             print('Failure');

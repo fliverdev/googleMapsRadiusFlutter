@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:example1/model/location_model.dart';
 import 'package:example1/model/radius_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -28,14 +27,7 @@ class MapTypeChanged extends MapsState {
   }
 }
 
-class LocationUserfound extends MapsState {
-  final LocationModel locationModel;
-  LocationUserfound({@required this.locationModel});
-  @override
-  String toString() {
-    return 'LocationUserfound locationModel ${locationModel.toString()} ';
-  }
-}
+
 
 class MarkerWithRadius extends MapsState {
   final RadiusModel raidiusModel;

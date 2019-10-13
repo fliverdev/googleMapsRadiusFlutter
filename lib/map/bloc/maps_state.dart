@@ -37,15 +37,6 @@ class LocationUserfound extends MapsState {
   }
 }
 
-class LocationFromPlaceFound extends MapsState {
-  final LocationModel locationModel;
-  LocationFromPlaceFound({@required this.locationModel});
-  @override
-  String toString() {
-    return 'LocationFromPlaceFound: { locationModel ${locationModel.toString()} } ';
-  }
-}
-
 class MarkerWithRadius extends MapsState {
   final RadiusModel raidiusModel;
   MarkerWithRadius({@required this.raidiusModel});

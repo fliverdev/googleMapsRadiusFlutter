@@ -18,24 +18,6 @@ class GenerateMarkerWithRadius extends MapsEvent {
       'GenerateMarkerWithRadius {lastPosition: $lastPosition radius $radius}';
 }
 
-class UpdateRangeValues extends MapsEvent {
-  final double radius;
-  UpdateRangeValues({@required this.radius});
-  @override
-  String toString() {
-    return 'UpdateRangeValues: radius $radius';
-  }
-}
-
-class FetchPlaceFromAddressPressed extends MapsEvent {
-  final String place;
-
-  FetchPlaceFromAddressPressed({@required this.place}) : super([place]);
-
-  @override
-  String toString() => 'FetchPlaceFromAddressPressed { place: $place }';
-}
-
 class IsRadiusFixedPressed extends MapsEvent {
   final bool isRadiusFixed;
   IsRadiusFixedPressed({@required this.isRadiusFixed});
@@ -44,18 +26,6 @@ class IsRadiusFixedPressed extends MapsEvent {
     return 'IsRadiusFixedPressed: isRadiusFixed $isRadiusFixed';
   }
 }
-
-class MapTypeButtonPressed extends MapsEvent {
-  final MapType currentMapType;
-
-  MapTypeButtonPressed({@required this.currentMapType})
-      : super([currentMapType]);
-
-  @override
-  String toString() => 'MapTypeButtonPressed:  $currentMapType';
-}
-
-class GetUserLocationPressed extends MapsEvent {}
 
 class GenerateMarkerToCompareLocation extends MapsEvent {
   final LatLng radiusLocation;

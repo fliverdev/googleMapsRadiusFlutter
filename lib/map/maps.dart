@@ -1,8 +1,4 @@
-import 'package:example1/map/fixed_gps_icon.dart';
-import 'package:example1/map/location_user.dart';
-import 'package:example1/map/map_option.dart';
 import 'package:example1/map/range_radius.dart';
-import 'package:example1/map/search_place.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -23,7 +19,6 @@ class _MapState extends State<Maps> {
   final Set<Circle> _circle = {};
   double _radius = 100.0;
   double _zoom = 18.0;
-  bool _showFixedGpsIcon = false;
   bool _isRadiusFixed = false;
   String error;
   static const LatLng _center = const LatLng(40.7815, -73.9667);
@@ -82,7 +77,6 @@ class _MapState extends State<Maps> {
           }
           if (state is MarkerWithRadius) {
             Scaffold.of(context)..hideCurrentSnackBar();
-            _showFixedGpsIcon = false;
 
             if (_markers.isNotEmpty) {
               _markers.clear();
@@ -158,10 +152,6 @@ class _MapState extends State<Maps> {
                 body: Stack(
                   children: <Widget>[
                     _googleMapsWidget(state),
-                    FixedLocationGps(showFixedGpsIcon: _showFixedGpsIcon),
-                    MapOption(mapType: _currentMapType),
-                    LocationUser(),
-                    SearchPlace(onPressed: _animateCamera),
                     RangeRadius(isRadiusFixed: _isRadiusFixed),
                   ],
                 ),
@@ -177,9 +167,8 @@ class _MapState extends State<Maps> {
 
   void _onCameraMove(CameraPosition position) {
     if (!_isRadiusFixed) _lastMapPosition = position.target;
-    if (_showFixedGpsIcon != true && _isRadiusFixed != true) {
+    if (_isRadiusFixed != true) {
       setState(() {
-        _showFixedGpsIcon = true;
         if (_markers.isNotEmpty) {
           _markers.clear();
           _circle.clear();

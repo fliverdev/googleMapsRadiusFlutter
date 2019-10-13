@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:example1/model/location_model.dart';
 import 'package:example1/model/radius_model.dart';
@@ -6,62 +7,26 @@ import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:great_circle_distance/great_circle_distance.dart';
-import 'package:location/location.dart';
+
 import './bloc.dart';
-import 'package:flutter/services.dart';
 
 class MapsBloc extends Bloc<MapsEvent, MapsState> {
   @override
-  MapsState get initialState => InitialMapsState();
+  MapsState get initialState =>
+      InitialMapsState(); //Returns the state before any event has dispatched
 
   @override
   Stream<MapsState> mapEventToState(
     MapsEvent event,
   ) async* {
-    if (event is MapTypeButtonPressed) {
-      yield* _mapTypeButtonPressedToState(event.currentMapType);
-    } else if (event is GetUserLocationPressed) {
-      yield* _mapGetLocationToState();
-    } else if (event is GenerateMarkerWithRadius) {
+    if (event is GenerateMarkerWithRadius) {
       yield* _mapGenerateMarkerwithRadiusToMap(
           event.lastPosition, event.radius);
-    } else if (event is UpdateRangeValues) {
-      yield* _mapUpdateRangeValues(event.radius);
     } else if (event is IsRadiusFixedPressed) {
       yield* _mapRadiusFixedToMap(event.isRadiusFixed);
     } else if (event is GenerateMarkerToCompareLocation) {
       yield* _mapGenerateMarkerToCompareToMap(
           event.mapPosition, event.radiusLocation, event.radius);
-    } else if (event is FetchPlaceFromAddressPressed) {
-      yield* _mapFetchPlaceFromAdrressToMap(event.place);
-    }
-  }
-
-  Stream<MapsState> _mapTypeButtonPressedToState(MapType _maptype) async* {
-    try {
-      yield Loading();
-      if (_maptype == MapType.normal) {
-        yield MapTypeChanged(mapType: MapType.satellite);
-      } else {
-        yield MapTypeChanged(mapType: MapType.normal);
-      }
-    } catch (_) {
-      yield Failure();
-    }
-  }
-
-  Stream<MapsState> _mapGetLocationToState() async* {
-    try {
-      yield Loading();
-      var _locationService = new Location();
-      LocationData _currentLocation = await _locationService.getLocation();
-
-      yield LocationUserfound(
-          locationModel: LocationModel(
-              lat: _currentLocation.latitude,
-              long: _currentLocation.longitude));
-    } on PlatformException catch (_) {
-      yield Failure();
     }
   }
 
@@ -92,21 +57,6 @@ class MapsBloc extends Bloc<MapsEvent, MapsState> {
     }
   }
 
-  Stream<MapsState> _mapUpdateRangeValues(double _radius) async* {
-    yield Loading();
-    double _zoom;
-    if (_radius > 100 && _radius < 220) {
-      _zoom = 17;
-    } else if (_radius >= 220 && _radius < 420) {
-      _zoom = 16;
-    } else if (_radius > 420) {
-      _zoom = 15;
-    } else {
-      _zoom = 18;
-    }
-    yield RadiusUpdate(radius: _radius, zoom: _zoom);
-  }
-
   Stream<MapsState> _mapRadiusFixedToMap(bool _isRadiusFixed) async* {
     if (_isRadiusFixed)
       yield RadiusFixedUpdate(radiusFixed: false);
@@ -126,18 +76,10 @@ class MapsBloc extends Bloc<MapsEvent, MapsState> {
           latitude2: _mapPostion.latitude,
           longitude2: _mapPostion.longitude);
       if (_radius >= gcd.haversineDistance()) {
-        message =
-            'Determine if location is within radius ${gcd.haversineDistance().toInt()} Mts';
         colorSnack = Colors.green;
       } else {
-        message =
-            'The location is outside ${gcd.haversineDistance().toInt()} Mts';
         colorSnack = Colors.red;
       }
-      final _snackbar = SnackBar(
-          content: Text(message),
-          duration: Duration(seconds: 3),
-          backgroundColor: colorSnack);
 
       final _marker = Marker(
         markerId: MarkerId(_mapPostion.toString()),
@@ -149,7 +91,7 @@ class MapsBloc extends Bloc<MapsEvent, MapsState> {
             ? BitmapDescriptor.defaultMarkerWithHue(130.0)
             : BitmapDescriptor.defaultMarker,
       );
-      yield MarkerWithSnackbar(marker: _marker, snackBar: _snackbar);
+      yield MarkerWithSnackbar(marker: _marker);
     } catch (_) {
       yield Failure();
     }

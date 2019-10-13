@@ -40,27 +40,12 @@ class _RangeRadiusState extends State<RangeRadius> {
             return Column(
               children: <Widget>[
                 Text(_radius.toInt().toString() + ' Mtrs'),
-                Slider(
-                  max: 700,
-                  min: 100,
-                  value: _radius,
-                  activeColor: Colors.red,
-                  inactiveColor: Colors.grey,
-                  divisions: 12,
-                  onChanged: (double value) {
-                    if (!widget.isRadiusFixed) {
-                      _mapsBloc.dispatch(UpdateRangeValues(radius: value));
-                    }
-                  },
-                ),
                 FlatButton(
-                  child: Text(widget.isRadiusFixed != true
-                      ? 'Set radius'
-                      : 'Cancel'),
+                  child: Text(
+                      widget.isRadiusFixed != true ? 'ADD MARKERS' : 'DONE'),
                   onPressed: () => _mapsBloc.dispatch(IsRadiusFixedPressed(
                       isRadiusFixed: widget.isRadiusFixed)),
-                  color:
-                      widget.isRadiusFixed != true ? Colors.blue : Colors.red,
+                  color: Colors.greenAccent,
                 )
               ],
             );

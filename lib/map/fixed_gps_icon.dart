@@ -13,10 +13,11 @@ class FixedLocationGps extends StatelessWidget {
                 alignment: Alignment.center,
                 child: new Icon(
                   Icons.gps_fixed,
-                  size: 40.0,
+                  size: 140.0,
                   color: Colors.red,
                 ),
               )
             : Container());
   }
 }
+ // DELETE

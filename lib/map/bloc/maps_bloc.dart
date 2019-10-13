@@ -73,7 +73,7 @@ class MapsBloc extends Bloc<MapsEvent, MapsState> {
         markerId: MarkerId(_position.toString()),
         position: _position,
         infoWindow: InfoWindow(
-          title: 'Radio de $_radius Mts',
+          title: 'Radius is $_radius meters',
         ),
         icon: BitmapDescriptor.defaultMarker,
       );
@@ -127,11 +127,11 @@ class MapsBloc extends Bloc<MapsEvent, MapsState> {
           longitude2: _mapPostion.longitude);
       if (_radius >= gcd.haversineDistance()) {
         message =
-            'La localizacion se encuentra dentro del rango a ${gcd.haversineDistance().toInt()} Mts';
+            'Determine if location is within radius ${gcd.haversineDistance().toInt()} Mts';
         colorSnack = Colors.green;
       } else {
         message =
-            'La localizacion se encuentra fuera del rango a ${gcd.haversineDistance().toInt()} Mts';
+            'The location is outside ${gcd.haversineDistance().toInt()} Mts';
         colorSnack = Colors.red;
       }
       final _snackbar = SnackBar(
@@ -143,7 +143,7 @@ class MapsBloc extends Bloc<MapsEvent, MapsState> {
         markerId: MarkerId(_mapPostion.toString()),
         position: _mapPostion,
         infoWindow: InfoWindow(
-          title: '${gcd.haversineDistance().toInt()} Mts del radio',
+          title: '${gcd.haversineDistance().toInt()} mts of radius',
         ),
         icon: colorSnack == Colors.green
             ? BitmapDescriptor.defaultMarkerWithHue(130.0)

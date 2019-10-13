@@ -55,8 +55,8 @@ class _RangeRadiusState extends State<RangeRadius> {
                 ),
                 FlatButton(
                   child: Text(widget.isRadiusFixed != true
-                      ? 'Fijar Radio'
-                      : 'Cancelar'),
+                      ? 'Set radius'
+                      : 'Cancel'),
                   onPressed: () => _mapsBloc.dispatch(IsRadiusFixedPressed(
                       isRadiusFixed: widget.isRadiusFixed)),
                   color:

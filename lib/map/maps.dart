@@ -143,7 +143,7 @@ class _MapState extends State<Maps> {
                   content: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Cargando'),
+                      Text('Loading'),
                       CircularProgressIndicator(),
                     ],
                   ),
